@@ -75,7 +75,7 @@ def add_motion_artefacts(img):
     # K-space mixing
     for j in range(0,2*N+1): 
       fft_2d = calculate_2dft(img[:,:,(i+j)-N])
-      fft_mixed[:,j*11:(j+1)*11] = fft_2d[:,j*11:(j+1)*11]
+      fft_mixed[:,2+j*5:2+(j+1)*5] = fft_2d[:,2+j*5:2+(j+1)*5]
       # if j<N:
       #   fft_mixed[:,j*6:(j+1)*6] = fft_2d[:,j*6:(j+1)*6]
       # elif j == N:
@@ -139,12 +139,13 @@ class CineCardiac(Dataset):
 
     def __getitem__(self, idx):
       gt = (self.img_data[idx] - np.min(self.img_data[idx]))/(np.max(self.img_data[idx]) - np.min(self.img_data[idx])) #Normalizing to [0,1]
-      img,gt = add_motion_artefacts(gt)
+      img,_ = add_motion_artefacts(gt)
       img = np.moveaxis(img,0,-1)
-      gt = np.moveaxis(gt,0,-1)
+      # gt = np.moveaxis(gt,0,-1)
       # img = img[:,:,9-3:9+4]
       # img_inv = img_inv[:,:,9-3:9+4]
       # gt = gt[:,:,9-3:9+4]
+      gt = gt[:,:,9:21]
       img = img[:,:,6-3:6+4]
       img_inv = np.zeros((100,100,7))
       for i in range(7):
