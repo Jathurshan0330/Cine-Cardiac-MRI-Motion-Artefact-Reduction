@@ -336,7 +336,7 @@ class Discriminator(nn.Module):
         self.fc1   = nn.Linear(12*12*256, 1024)
         self.relu1 = nn.ReLU(True)
         self.fc2   = nn.Linear(1024,1)
-        self.relu2 = nn.Sigmoid()# nn.ReLU(True)  ####
+        self.relu2 = nn.ReLU(True)  ####
 
     def forward(self, x):
         out1 = self.conv1_1 (x)
