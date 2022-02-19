@@ -62,7 +62,7 @@ def add_motion_artefacts(img):
                                [H,W,S']. Here S' = S-2*N where N = 7
 
   """
-  N = 7
+  N = 11
   start_ind = N
   end_ind = img.shape[2]-N
   motion_artefact_added = []
@@ -74,18 +74,19 @@ def add_motion_artefacts(img):
     # K-space mixing
     for j in range(0,2*N+1): 
       fft_2d = calculate_2dft(img[:,:,(i+j)-N])
-      if j<N:
-        fft_mixed[:,j*6:(j+1)*6] = fft_2d[:,j*6:(j+1)*6]
-      elif j == N:
-        fft_mixed[:,j*6: 58] = fft_2d[:,j*6:58]
-      elif j>N:
-        fft_mixed[:,58+(j-N-1)*6: 58+(j-N)*6] = fft_2d[:,58+(j-N-1)*6: 58+(j-N)*6]
+      fft_mixed[:,j*9:(j+1)*9] = fft_2d[:,j*9:(j+1)*9]
+      # if j<N:
+      #   fft_mixed[:,j*6:(j+1)*6] = fft_2d[:,j*6:(j+1)*6]
+      # elif j == N:
+      #   fft_mixed[:,j*6: 58] = fft_2d[:,j*6:58]
+      # elif j>N:
+      #   fft_mixed[:,58+(j-N-1)*6: 58+(j-N)*6] = fft_2d[:,58+(j-N-1)*6: 58+(j-N)*6]
 
     # Zero Padding
-    fft_mixed[0:25,:] = 0
-    fft_mixed[-25:,:] = 0
-    fft_mixed[:,0:25] = 0
-    fft_mixed[:,-25:] = 0
+    fft_mixed[0:35,:] = 0
+    fft_mixed[-35:,:] = 0
+    fft_mixed[:,0:35] = 0
+    fft_mixed[:,-35:] = 0
 
     ma_img = calculate_2dift(fft_mixed)
     motion_artefact_added.append(ma_img)
@@ -138,13 +139,16 @@ class CineCardiac(Dataset):
       gt = (self.img_data[idx] - np.min(self.img_data[idx]))/(np.max(self.img_data[idx]) - np.min(self.img_data[idx])) #Normalizing to [0,1]
       img = add_motion_artefacts(gt)
       img = np.moveaxis(img,0,-1)
-      gt = gt[:,:,7:23]
+      gt = gt[:,:,11:19]
       img_inv = np.zeros((100,100,16))
-      for i in range(16):
-          img_inv[:,:,i] = img[:,:,15-i]
-      img = img[:,:,9-3:9+4]
-      img_inv = img_inv[:,:,9-3:9+4]
-      gt = gt[:,:,9-3:9+4]
+      for i in range(8):
+          img_inv[:,:,i] = img[:,:,7-i]
+      # img = img[:,:,9-3:9+4]
+      # img_inv = img_inv[:,:,9-3:9+4]
+      # gt = gt[:,:,9-3:9+4]
+      img = img[:,:,:-1]
+      img_inv = img_inv[:,:,:-1]
+      gt = gt[:,:,:-1]
       # print(img.shape,gt.shape)
       if self.transform:
           img = self.transform(img).to(self.device)  
