@@ -1,3 +1,4 @@
+# Helper function provided by the organizers at the ACDC challenge
 """
 author: Clément Zotti (clement.zotti@usherbrooke.ca)
 date: April 2017
