@@ -36,3 +36,9 @@ def interactive_gif_data(img, cmap = 'gray'):
 
 
   return interactive(Animate, slice=select_slice)
+
+def AnimationFunction(frame):
+        y = img[slice,frame,:,:]
+    
+        # line is set with new values of x and y
+        imgs_plotted.set_data(y)
