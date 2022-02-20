@@ -138,7 +138,7 @@ class CineCardiac(Dataset):
         return len(self.img_data)
 
     def __getitem__(self, idx):
-      gt = (self.img_data[idx] - np.min(self.img_data[idx]))/(np.max(self.img_data[idx]) - np.min(self.img_data[idx])) #Normalizing to [0,1]
+      gt = self.img_data[idx]# - np.min(self.img_data[idx]))/(np.max(self.img_data[idx]) - np.min(self.img_data[idx])) #Normalizing to [0,1]
       img,_ = add_motion_artefacts(gt)
       img = np.moveaxis(img,0,-1)
       # gt = np.moveaxis(gt,0,-1)
@@ -147,10 +147,13 @@ class CineCardiac(Dataset):
       # gt = gt[:,:,9-3:9+4]
       gt = gt[:,:,9:21]
       img = img[:,:,6-3:6+4]
+      img = (img  - np.min(img ))/(np.max(img ) - np.min(img ))
       img_inv = np.zeros((100,100,7))
       for i in range(7):
           img_inv[:,:,i] = img[:,:,6-i]
       gt = gt[:,:,6-3:6+4]
+
+      gt = (gt - np.min(gt))/(np.max(gt) - np.min(gt))
       # print(img.shape,gt.shape)
       if self.transform:
           img = self.transform(img).to(self.device)  
