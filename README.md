@@ -4,7 +4,8 @@ This repository contains the attempted implementation of the "Cine Cardiac MRI M
 ## Results
 
 
-![41](https://user-images.githubusercontent.com/52663918/156579259-10589f75-c174-4192-ad39-502f73cd5203.gif)
+
+![41](https://user-images.githubusercontent.com/52663918/156579564-fb86dd02-568c-4b8f-854d-b27881458267.gif)
 
 
 
