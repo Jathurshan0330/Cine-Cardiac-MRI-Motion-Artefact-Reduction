@@ -1,6 +1,14 @@
 # Cine-Cardiac-MRI-Motion-Artefact-Reduction
 This repository contains the attempted implementation of the "Cine Cardiac MRI Motion Artifact Reduction Using a Recurrent Neural Network" paper published at IEEE Transactions on Medical Imaging (Aug 2021).
 
+## Results
+
+
+![41](https://user-images.githubusercontent.com/52663918/156579259-10589f75-c174-4192-ad39-502f73cd5203.gif)
+
+
+
+
 ## Getting Started
 
 Script for Model Training (Colab):
